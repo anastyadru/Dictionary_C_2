@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using ByteArrayExtensions;
 
 namespace Dictionary_C_2
 {
