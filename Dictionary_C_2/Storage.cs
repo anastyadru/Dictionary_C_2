@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using ByteArrayExtensions;
 
 namespace Dictionary_C_2
 {
@@ -45,7 +46,7 @@ namespace Dictionary_C_2
                 // создан экземпляр класса BinaryFormatter для десериализации данных из потока FileStream
 
                 var bytes = (byte[])binaryFormatter.Deserialize(fileStream); // вызван метод Deserialize() для получения объекта типа T из файла
-                // return bytes.GetObject<T>();
+                return bytes.GetObject<T>();
             }
         }
         
