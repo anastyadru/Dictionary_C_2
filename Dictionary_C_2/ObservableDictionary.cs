@@ -10,21 +10,8 @@ namespace Dictionary_C_2
     /// <typeparam name="TValue">Тип значения словаря.</typeparam>
     public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
-        private readonly Dictionary<string, WeatherData> cache = new Dictionary<string, WeatherData>();
-        
-        cache.ItemAdded += Cache_ItemAdded;
-        cache.ItemRemoved += Cache_ItemRemoved;
+        private readonly Dictionary<TKey, TValue> cache = new Dictionary<TKey, TValue>();
 
-        private void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
-        {
-            Console.WriteLine($"Добавлен город {e.Key} со значением {e.Value}");
-        }
-
-        private void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
-        {
-            Console.WriteLine($"Удален город {e.Key} со значением {e.Value}");
-        }
-        
         /// <summary>
         /// Событие, возникающее при добавлении элемента в словарь.
         /// </summary>
@@ -70,6 +57,13 @@ namespace Dictionary_C_2
             
             return false;
         }
+        
+        private void Cache_ItemAdded(object sender, KeyValuePair<TKey, TValue> e)
+        {
+            Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
+        }
+        
+        
 
     }
 }
