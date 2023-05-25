@@ -16,6 +16,11 @@ namespace Dictionary_C_2
         /// <param name="filePath">Путь к файлу, в который нужно сохранить объект.</param>
         public static void Save<T>(T data, string filePath)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            
             var bytes = data.GetBytes(); // сериализован объект в массив байтов с помощью метода GetBytes()
             using (var fileStream = new FileStream(filePath, FileMode.Create)) 
                 
@@ -45,6 +50,12 @@ namespace Dictionary_C_2
                 // создан экземпляр класса BinaryFormatter для десериализации данных из потока FileStream
 
                 var bytes = (byte[])binaryFormatter.Deserialize(fileStream); // вызван метод Deserialize() для получения объекта типа T из файла
+                
+                if (bytes == null)
+                {
+                    throw new SerializationException("Failed to deserialize object from file.");
+                }
+                
                 return bytes.GetObject<T>();
             }
         }
