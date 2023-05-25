@@ -10,7 +10,7 @@ namespace Dictionary_C_2
     /// <typeparam name="TValue">Тип значения словаря.</typeparam>
     public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
-        private readonly Dictionary<TKey, TValue> cache = new Dictionary<TKey, TValue>();
+        private readonly Dictionary<TKey, TValue> _cache = new Dictionary<TKey, TValue>();
 
         /// <summary>
         /// Событие, возникающее при добавлении элемента в словарь.
@@ -29,7 +29,7 @@ namespace Dictionary_C_2
         /// <param name="value">Значение добавляемого элемента.</param>
         public void Add(TKey key, TValue value)
         {
-            cache.Add(key, value);
+            _cache.Add(key, value);
             ItemAdded?.Invoke(this, new KeyValuePair<TKey, TValue>(key, value)); // вызвано событие ItemAdded и передан в него добавленный элемент
         }
         
@@ -40,10 +40,10 @@ namespace Dictionary_C_2
         /// <returns>Значение true, если элемент был успешно удален из словаря; в противном случае — значение false.</returns>
         public bool Remove(TKey key)
         {
-            if (cache.ContainsKey(key))
+            if (_cache.ContainsKey(key))
             {
-                TValue value = cache[key]; // получено значение элемента
-                bool result = cache.Remove(key);
+                TValue value = _cache[key]; // получено значение элемента
+                bool result = _cache.Remove(key);
                 if (result) // вызвано событие ItemRemoved и передан в него удаленный элемент
                 {
                     ItemRemoved?.Invoke(this, new KeyValuePair<TKey, TValue>(key, value)); 
