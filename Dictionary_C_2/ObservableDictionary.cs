@@ -20,7 +20,7 @@ namespace Dictionary_C_2
         /// <summary>
         /// Событие, возникающее при удалении элемента из словаря.
         /// </summary>
-        public event EventHandler<KeyValuePair<TKey, TValue>> ItemRemoved; // объявлены события ItemAdded и ItemRemoved с делегатом EventHandler
+        public event EventHandler<KeyValuePair<TKey, TValue>> ItemRemoved;
         
         /// <summary>
         /// Добавляет элемент с указанным ключом и значением в словарь.
@@ -49,7 +49,6 @@ namespace Dictionary_C_2
                     ItemRemoved?.Invoke(this, new KeyValuePair<TKey, TValue>(key, value)); 
                     
                     // вызвано событие ItemAdded и передано в него пара ключ-значение, которая была удалена из словаря
-                    
                 }
                 
                 return result;
@@ -58,12 +57,34 @@ namespace Dictionary_C_2
             return false;
         }
         
+        /// <summary>
+        /// Метод-обработчик события ItemAdded.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
         private void Cache_ItemAdded(object sender, KeyValuePair<TKey, TValue> e)
         {
             Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
         }
         
+        /// <summary>
+        /// Метод-обработчик события ItemRemoved.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
+        private void Cache_ItemRemoved(object sender, KeyValuePair<TKey, TValue> e)
+        {
+            Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
+        }
         
+        /// <summary>
+        /// Конструктор класса ObservableDictionary.
+        /// </summary>
+        public ObservableDictionary()
+        {
+            ItemAdded += Cache_ItemAdded;
+            ItemRemoved += Cache_ItemRemoved;
+        }
 
     }
 }
