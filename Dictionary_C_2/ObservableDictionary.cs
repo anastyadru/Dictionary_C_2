@@ -29,6 +29,11 @@ namespace Dictionary_C_2
         /// <param name="value">Значение добавляемого элемента.</param>
         public void Add(TKey key, TValue value)
         {
+            if (!_cache.ContainsKey(key))
+            {
+                
+            }
+
             _cache.Add(key, value);
             ItemAdded?.Invoke(this, new KeyValuePair<TKey, TValue>(key, value)); // вызвано событие ItemAdded и передан в него добавленный элемент
         }
