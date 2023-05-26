@@ -16,8 +16,6 @@ namespace Dictionary_C_2
         /// <param name="args">Аргументы командной строки.</param>
         public static void Main(string[] args)
         {
-            cache.ItemAdded += Cache_ItemAdded;
-
             string url;
             string cityName;
 
