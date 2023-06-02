@@ -30,6 +30,11 @@ namespace Dictionary_C_2
         public Data Data { get; set; }
         
         /// <summary>
+        /// Список прогнозов погоды.
+        /// </summary>
+        public List<Forecast> ForecastList { get; set; }
+        
+        /// <summary>
         /// Получает или задает видимость.
         /// </summary>
         public int Visibility { get; set; }
