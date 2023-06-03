@@ -10,6 +10,11 @@ namespace Dictionary_C_2
     /// </summary>
      public class Program
     {
+        /// <summary>
+        /// Асинхронно получает данные о погоде по указанному URL и возвращает объект WeatherData.
+        /// </summary>
+        /// <param name="url">URL для получения данных о погоде.</param>
+        /// <returns>Объект WeatherData, содержащий данные о погоде.</returns>
         private async Task<WeatherData> PrintAsync(string url)
         {
             using (var client = new HttpClient())
