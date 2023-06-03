@@ -32,6 +32,10 @@ namespace Dictionary_C_2
             }
         }
 
+        /// <summary>
+        /// Основной метод приложения
+        /// </summary>
+        /// <param name="args">Аргументы командной строки</param>
         static async Task Main(string[] args)
         {
             string url;
