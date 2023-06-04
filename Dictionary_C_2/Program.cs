@@ -38,6 +38,11 @@ namespace Dictionary_C_2
         /// <param name="args">Аргументы командной строки</param>
         static async Task Main(string[] args)
         {
+            // Forecast forecast = new Forecast();
+            //Storage storage = new Storage();
+            // forecast.CityAdded += storage.AddWeatherData;
+            // forecast.CityAdded += storage.SaveToFile;
+            
             string url;
             string cityName;
 
