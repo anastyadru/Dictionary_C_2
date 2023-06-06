@@ -128,6 +128,13 @@ namespace Dictionary_C_2
             {
                 Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
             }
+            
+            var data = storage.WeatherData;
+            var path = "weatherdata.dat";
+            var bytes = data.GetBytes(); // получаем массив байтов, представляющий сериализованные данные объекта
+            File.WriteAllBytes(path, bytes); // записываем массив байтов в файл по указанному пути
+            
+            
         }
     }
 }
