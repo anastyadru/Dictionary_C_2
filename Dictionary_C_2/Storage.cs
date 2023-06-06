@@ -36,6 +36,15 @@ namespace Dictionary_C_2
             }
         }
 
+        // public static T GetObject<T>(this byte[] bytes)
+        // {
+            // using (var memoryStream = new MemoryStream(bytes))
+            // {
+                // var binaryFormatter = new BinaryFormatter();
+                // return (T)binaryFormatter.Deserialize(memoryStream);
+            // }
+        // }
+        
         /// <summary>
         /// Загружает объект из файла по указанному пути.
         /// </summary>
