@@ -10,6 +10,8 @@ namespace Dictionary_C_2
     /// </summary>
     public class Storage
     {
+        public ObservableDictionary<string, WeatherData> WeatherData { get; set; }
+        
         /// <summary>
         /// Сохраняет объект в файл по указанному пути.
         /// </summary>
