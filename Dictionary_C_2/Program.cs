@@ -77,6 +77,8 @@ namespace Dictionary_C_2
                     result += $"Температура ощущается на: {weatherData.Data.FeelsLike}°C\n";
                     result += $"Давление: {weatherData.Data.Pressure}Pa\n";
                     result += $"Влажность: {weatherData.Data.Humidity}%\n";
+                    
+                    storage.WeatherData.Add(cityName, weatherData);
                 }
 
                 else
@@ -108,6 +110,8 @@ namespace Dictionary_C_2
                         result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
                         result += $"Давление: {forecast.Pressure}Pa\n";
                         result += $"Влажность: {forecast.Humidity}%\n";
+                        
+                        storage.WeatherData.Add(cityName, weatherData);
                     }
                 }
 
@@ -127,5 +131,3 @@ namespace Dictionary_C_2
         }
     }
 }
-
-// private static readonly ObservableDictionary<string, WeatherData> cache = new ObservableDictionary<string, WeatherData>();
