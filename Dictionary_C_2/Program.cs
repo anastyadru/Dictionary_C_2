@@ -132,6 +132,12 @@ namespace Dictionary_C_2
                 Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
             }
             
+            // Добавить обработку событий при добавлении нового города в ObservableDictionary
+            storage.WeatherData.ItemAdded += Cache_ItemAdded;
+            storage.WeatherData.ItemRemoved += Cache_ItemRemoved;
+            
+            
+            
             var data = storage.WeatherData;
             var path = "weatherdata.dat";
             var bytes = data.GetBytes(); // получаем массив байтов, представляющий сериализованные данные объекта
