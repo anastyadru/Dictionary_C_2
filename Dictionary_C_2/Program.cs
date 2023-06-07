@@ -136,14 +136,14 @@ namespace Dictionary_C_2
             storage.WeatherData.ItemAdded += Cache_ItemAdded;
             storage.WeatherData.ItemRemoved += Cache_ItemRemoved;
             
-            private static void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
+            private void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
             {
-                Console.WriteLine($"Добавлен новый город в кэш: {e.Key}");
+                Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
             }
 
-            private static void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
+            private void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
             {
-                Console.WriteLine($"Удален город из кэша: {e.Key}");
+                Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
             }
             
             var data = storage.WeatherData;
