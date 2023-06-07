@@ -174,7 +174,14 @@ namespace Dictionary_C_2
 
             var loadedData = DeserializeData(path); // Десериализуем данные из файла
             
-            
+            // Выводим результаты
+            Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
+
+            foreach (var item in loadedData)
+            {
+                Console.WriteLine($"Город: {item.Key}");
+                Console.WriteLine($"Данные: {item.Value}");
+            }
 
             
             // var data = storage.WeatherData;
