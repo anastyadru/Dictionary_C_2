@@ -156,7 +156,26 @@ namespace Dictionary_C_2
                 }
             }
             
+            // Метод десериализации данных
+            private Dictionary<string, WeatherData> DeserializeData(string path)
+            {
+                var formatter = new BinaryFormatter();
+                using (var stream = new FileStream(path, FileMode.Open))
+                {
+                    return (Dictionary<string, WeatherData>)formatter.Deserialize(stream);
+                }
+            }
+
+            // Использование методов сериализации и десериализации
+            var data = storage.WeatherData;
+            var path = "weatherdata.dat";
+
+            SerializeData(data, path); // Сериализуем данные и записываем их в файл
+
+            var loadedData = DeserializeData(path); // Десериализуем данные из файла
             
+            
+
             
             // var data = storage.WeatherData;
             // var path = "weatherdata.dat";
