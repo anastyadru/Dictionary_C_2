@@ -146,19 +146,29 @@ namespace Dictionary_C_2
                 Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
             }
             
-            var data = storage.WeatherData;
-            var path = "weatherdata.dat";
-            var bytes = data.GetBytes(); // получаем массив байтов, представляющий сериализованные данные объекта
-            File.WriteAllBytes(path, bytes); // записываем массив байтов в файл по указанному пути
+            // Метод сериализации данных
+            private void SerializeData(Dictionary<string, WeatherData> data, string path)
+            {
+                var formatter = new BinaryFormatter();
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    formatter.Serialize(stream, data);
+                }
+            }
+            
+            // var data = storage.WeatherData;
+            // var path = "weatherdata.dat";
+            // var bytes = data.GetBytes(); // получаем массив байтов, представляющий сериализованные данные объекта
+            // File.WriteAllBytes(path, bytes); // записываем массив байтов в файл по указанному пути
             
             // Десериализация данных из файла
-            var loadedBytes = File.ReadAllBytes(path); // читаем массив байтов из файла по указанному пути
-            using (var stream = new MemoryStream(loadedBytes)) // создаем MemoryStream из массива байтов
-            {
-                var formatter = new BinaryFormatter(); // создаем объект BinaryFormatter для десериализации данных
-                var loadedData = (Dictionary<string, WeatherData>)formatter.Deserialize(stream); // десериализуем данные из потока stream и возвращаем объект типа T
-                Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
-            }
+            // var loadedBytes = File.ReadAllBytes(path); // читаем массив байтов из файла по указанному пути
+            // using (var stream = new MemoryStream(loadedBytes)) // создаем MemoryStream из массива байтов
+            // {
+                // var formatter = new BinaryFormatter(); // создаем объект BinaryFormatter для десериализации данных
+                // var loadedData = (Dictionary<string, WeatherData>)formatter.Deserialize(stream); // десериализуем данные из потока stream и возвращаем объект типа T
+                // Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
+            //}
             
         }
     }
