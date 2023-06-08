@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Dictionary_C_2
 {
@@ -133,7 +133,7 @@ namespace Dictionary_C_2
             }
             
             // Метод сериализации данных
-            private void SerializeData(Dictionary<string, WeatherData> data, string path)
+            private static void SerializeData(Dictionary<string, WeatherData> data, string path)
             {
                 var formatter = new BinaryFormatter();
                 using (var stream = new FileStream(path, FileMode.Create))
@@ -141,9 +141,9 @@ namespace Dictionary_C_2
                     formatter.Serialize(stream, data);
                 }
             }
-            
+
             // Метод десериализации данных
-            private Dictionary<string, WeatherData> DeserializeData(string path)
+            private static Dictionary<string, WeatherData> DeserializeData(string path)
             {
                 var formatter = new BinaryFormatter();
                 using (var stream = new FileStream(path, FileMode.Open))
@@ -173,12 +173,12 @@ namespace Dictionary_C_2
             storage.WeatherData.ItemAdded += Cache_ItemAdded;
             storage.WeatherData.ItemRemoved += Cache_ItemRemoved;
 
-            private void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
+            private static void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
             {
                 Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
             }
 
-            private void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
+            private static void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
             {
                 Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
             }
