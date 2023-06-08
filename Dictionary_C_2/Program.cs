@@ -166,7 +166,22 @@ namespace Dictionary_C_2
                 }
             }
             
-            
+            // Использование методов сериализации и десериализации
+            var data = storage.WeatherData;
+            var path = "weatherdata.dat";
+
+            SerializeData(data, path); // Сериализуем данные и записываем их в файл
+
+            var loadedData = DeserializeData(path); // Десериализуем данные из файла
+
+            // Выводим результаты
+            Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
+
+            foreach (var item in loadedData)
+            {
+                Console.WriteLine($"Город: {item.Key}");
+                Console.WriteLine($"Данные: {item.Value}");
+            }
             
             // var data = storage.WeatherData;
             // var path = "weatherdata.dat";
