@@ -26,23 +26,16 @@ namespace Dictionary_C_2
             }
             
             var bytes = data.GetBytes(); // сериализован объект в массив байтов с помощью метода GetBytes()
-            using (var fileStream = new FileStream(filePath, FileMode.Create)) 
-                
-            //  создан экземпляр класса BinaryFormatter для сериализации данных в поток FileStream
-            
-            {
-                var binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(fileStream, bytes); // вызван метод Serialize() для записи данных в файл 
-            }
+            using var fileStream = new FileStream(filePath, FileMode.Create);
+            var binaryFormatter = new BinaryFormatter();
+            binaryFormatter.Serialize(fileStream, bytes); // вызван метод Serialize() для записи данных в файл 
         }
 
         private static T GetObject<T>(this byte[] bytes)
         {
-            using (var memoryStream = new MemoryStream(bytes))
-            {
-                var binaryFormatter = new BinaryFormatter();
-                return (T)binaryFormatter.Deserialize(memoryStream);
-            }
+            using var memoryStream = new MemoryStream(bytes);
+            var binaryFormatter = new BinaryFormatter();
+            return (T)binaryFormatter.Deserialize(memoryStream);
         }
         
         /// <summary>
@@ -53,24 +46,19 @@ namespace Dictionary_C_2
         /// <returns>Загруженный объект типа T.</returns>
         public static T Load<T>(string filePath)
         {
-            using (var fileStream = new FileStream(filePath, FileMode.Open))
+            using var fileStream = new FileStream(filePath, FileMode.Open);
+            var binaryFormatter = new BinaryFormatter();
 
-                // создан экземпляр класса FileStream для чтения данных из файла по указанному пути
+            // создан экземпляр класса BinaryFormatter для десериализации данных из потока FileStream
 
+            var bytes = (byte[])binaryFormatter.Deserialize(fileStream); // вызван метод Deserialize() для получения объекта типа T из файла
+                
+            if (bytes == null)
             {
-                var binaryFormatter = new BinaryFormatter();
-
-                // создан экземпляр класса BinaryFormatter для десериализации данных из потока FileStream
-
-                var bytes = (byte[])binaryFormatter.Deserialize(fileStream); // вызван метод Deserialize() для получения объекта типа T из файла
-                
-                if (bytes == null)
-                {
-                    throw new SerializationException("Failed to deserialize object from file.");
-                }
-                
-                return bytes.GetObject<T>();
+                throw new SerializationException("Failed to deserialize object from file.");
             }
+                
+            return bytes.GetObject<T>();
         }
         
     }

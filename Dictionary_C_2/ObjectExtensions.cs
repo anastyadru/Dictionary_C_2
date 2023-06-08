@@ -17,14 +17,12 @@ namespace Dictionary_C_2
         {
             
             BinaryFormatter formatter = new BinaryFormatter(); // cоздан объект BinaryFormatter для сериализации данных
-            using (MemoryStream stream = new MemoryStream()) // MemoryStream использован для записи сериализованных данных
-            {
-                formatter.Serialize(stream, data); 
+            using MemoryStream stream = new MemoryStream();
+            formatter.Serialize(stream, data); 
                 
-                // сериализован объект data в поток stream с помощью метода Serialize объекта formatter
+            // сериализован объект data в поток stream с помощью метода Serialize объекта formatter
                 
-                return stream.ToArray(); // возвращен массив байт из потока stream с помощью метода ToArray()
-            }
+            return stream.ToArray(); // возвращен массив байт из потока stream с помощью метода ToArray()
         }
         
     }

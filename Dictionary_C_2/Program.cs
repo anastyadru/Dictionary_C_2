@@ -20,19 +20,17 @@ namespace Dictionary_C_2
         /// <returns>Объект WeatherData, содержащий данные о погоде.</returns>
         private async Task<WeatherData> PrintAsync(string url)
         {
-            using (var client = new HttpClient())
+            using var client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+                
+            if (response.IsSuccessStatusCode)
             {
-                HttpResponseMessage response = await client.GetAsync(url);
-                
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
-                    return weatherData;
-                }
-                
-                return null;
+                string responseBody = await response.Content.ReadAsStringAsync();
+                WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
+                return weatherData;
             }
+                
+            return null;
         }
 
         /// <summary>
@@ -136,27 +134,23 @@ namespace Dictionary_C_2
             void SerializeData(Dictionary<string, WeatherData> data, string path)
             {
                 var formatter = new BinaryFormatter();
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    formatter.Serialize(stream, data);
-                }
+                using var stream = new FileStream(path, FileMode.Create);
+                formatter.Serialize(stream, data);
             }
 
             // Метод десериализации данных
-            private static Dictionary<string, WeatherData> DeserializeData(string path)
+            Dictionary<string, WeatherData> DeserializeData(string path)
             {
                 var formatter = new BinaryFormatter();
-                using (var stream = new FileStream(path, FileMode.Open))
-                {
-                    return (Dictionary<string, WeatherData>)formatter.Deserialize(stream);
-                }
+                using var stream = new FileStream(path, FileMode.Open);
+                return (Dictionary<string, WeatherData>)formatter.Deserialize(stream);
             }
             
             // Использование методов сериализации и десериализации
             var data = storage.WeatherData; // Получаем данные из хранилища
             var path = "weatherdata.dat"; // Указываем путь к файлу для сохранения данных
 
-            SerializeData(data, path); // Сериализуем данные и записываем их в файл
+            SerializeData(data.ToDictionary(x => x.Key, x => x.Value), path); // Сериализуем данные и записываем их в файл
 
             var loadedData = DeserializeData(path); // Десериализуем данные из файла
 
@@ -170,15 +164,15 @@ namespace Dictionary_C_2
             }
             
             // Обработка событий при добавлении и удалении элементов из ObservableDictionary
-            storage.WeatherData.ItemAdded += Cache_ItemAdded;
-            storage.WeatherData.ItemRemoved += Cache_ItemRemoved;
+            storage.WeatherData.ItemAdded += CacheItemAdded;
+            storage.WeatherData.ItemRemoved += CacheItemRemoved;
 
-            void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
+            void CacheItemAdded(object sender, KeyValuePair<string, WeatherData> e)
             {
                 Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
             }
 
-            void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
+            void CacheItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
             {
                 Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
             }

@@ -8,7 +8,7 @@ namespace Dictionary_C_2
     /// </summary>
     /// <typeparam name="TKey">Тип ключа словаря.</typeparam>
     /// <typeparam name="TValue">Тип значения словаря.</typeparam>
-    public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+    public abstract class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private readonly Dictionary<TKey, TValue> _cache = new Dictionary<TKey, TValue>();
 
@@ -84,7 +84,7 @@ namespace Dictionary_C_2
         /// <summary>
         /// Конструктор класса ObservableDictionary.
         /// </summary>
-        public ObservableDictionary()
+        protected ObservableDictionary()
         {
             ItemAdded += Cache_ItemAdded;
             ItemRemoved += Cache_ItemRemoved;
