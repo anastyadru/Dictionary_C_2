@@ -132,20 +132,6 @@ namespace Dictionary_C_2
                 Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
             }
             
-            // Добавить обработку событий при добавлении нового города в ObservableDictionary
-            storage.WeatherData.ItemAdded += Cache_ItemAdded;
-            storage.WeatherData.ItemRemoved += Cache_ItemRemoved;
-            
-            private void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
-            {
-                Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
-            }
-
-            private void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
-            {
-                Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
-            }
-            
             // Метод сериализации данных
             private void SerializeData(Dictionary<string, WeatherData> data, string path)
             {
