@@ -156,6 +156,18 @@ namespace Dictionary_C_2
                 }
             }
             
+            // Метод десериализации данных
+            private Dictionary<string, WeatherData> DeserializeData(string path)
+            {
+                var formatter = new BinaryFormatter();
+                using (var stream = new FileStream(path, FileMode.Open))
+                {
+                    return (Dictionary<string, WeatherData>)formatter.Deserialize(stream);
+                }
+            }
+            
+            
+            
             // var data = storage.WeatherData;
             // var path = "weatherdata.dat";
             // var bytes = data.GetBytes(); // получаем массив байтов, представляющий сериализованные данные объекта
