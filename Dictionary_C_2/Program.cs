@@ -133,7 +133,7 @@ namespace Dictionary_C_2
             }
             
             // Метод сериализации данных
-            private static void SerializeData(Dictionary<string, WeatherData> data, string path)
+            void SerializeData(Dictionary<string, WeatherData> data, string path)
             {
                 var formatter = new BinaryFormatter();
                 using (var stream = new FileStream(path, FileMode.Create))
