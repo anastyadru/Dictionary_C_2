@@ -183,19 +183,19 @@ namespace Dictionary_C_2
                 Console.WriteLine($"Данные: {item.Value}");
             }
             
-            // var data = storage.WeatherData;
-            // var path = "weatherdata.dat";
-            // var bytes = data.GetBytes(); // получаем массив байтов, представляющий сериализованные данные объекта
-            // File.WriteAllBytes(path, bytes); // записываем массив байтов в файл по указанному пути
-            
-            // Десериализация данных из файла
-            // var loadedBytes = File.ReadAllBytes(path); // читаем массив байтов из файла по указанному пути
-            // using (var stream = new MemoryStream(loadedBytes)) // создаем MemoryStream из массива байтов
-            // {
-                // var formatter = new BinaryFormatter(); // создаем объект BinaryFormatter для десериализации данных
-                // var loadedData = (Dictionary<string, WeatherData>)formatter.Deserialize(stream); // десериализуем данные из потока stream и возвращаем объект типа T
-                // Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
-            //}
+            // Обработка событий при добавлении и удалении элементов из ObservableDictionary
+            storage.WeatherData.ItemAdded += Cache_ItemAdded;
+            storage.WeatherData.ItemRemoved += Cache_ItemRemoved;
+
+            private void Cache_ItemAdded(object sender, KeyValuePair<string, WeatherData> e)
+            {
+                Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
+            }
+
+            private void Cache_ItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
+            {
+                Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
+            }
             
         }
     }
