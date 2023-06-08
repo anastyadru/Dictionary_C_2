@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Dictionary_C_2
+﻿namespace Dictionary_C_2
 {
     /// <summary>
     /// Представляет город.
