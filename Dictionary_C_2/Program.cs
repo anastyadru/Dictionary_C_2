@@ -53,29 +53,77 @@ namespace Dictionary_C_2
             return weatherType;
         }
         
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        private static void PrintCurrentWeather(WeatherData weatherData, string cityName)
+        {
+            var result = "";
+            
+            if (weatherData != null)
+            {
+                result += $"Прогноз погоды в городе {cityName} на сегодня: \n";
+                result += $"Температура: {weatherData.Data.Temp}°C\n";
+                result += $"Температура ощущается на: {weatherData.Data.FeelsLike}°C\n";
+                result += $"Давление: {weatherData.Data.Pressure}Pa\n";
+                result += $"Влажность: {weatherData.Data.Humidity}%\n";
+            }
+            else
+            {
+                result += $"Ошибка получения данных о погоде в городе {cityName}\n";
+            }
+
+            Console.WriteLine(result);
+        }
+
+        private static void PrintWeatherForecast(WeatherData weatherData, string cityName)
+        {
+            var result = "";
+            
+            if (weatherData != null)
+            {
+                result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
+                for (int i = 0; i < weatherData.ForecastList.Count; i++)
+                {
+                    Forecast forecast = weatherData.ForecastList[i];
+                    result += $"День {i + 1}: \n";
+                    result += $"Дата: {forecast.Date}\n";
+                    result += $"Температура: {forecast.Temp}°C\n";
+                    result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
+                    result += $"Давление: {forecast.Pressure}Pa\n";
+                    result += $"Влажность: {forecast.Humidity}%\n";
+                }
+            }
+            else
+            {
+                result += $"Ошибка получения данных о погоде в городе {cityName}\n";
+            }
+
+            Console.WriteLine(result);
+        }
+
+        private static async Task Main(string[] args)
+        {
+            var cityName = GetCityName();
+            var weatherType = GetWeatherType();
+            
+            if (weatherType == 1)
+            {
+                string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                WeatherData weatherData = await GetWeatherDataAsync(url);
+                PrintCurrentWeather(weatherData, cityName);
+            }
+            else if (weatherType == 5)
+            {
+                string url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                WeatherData weatherData = await GetWeatherDataAsync(url);
+                PrintWeatherForecast(weatherData, cityName);
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
+            }
+
+            Console.ReadLine();
+        }
+
     
     
     
