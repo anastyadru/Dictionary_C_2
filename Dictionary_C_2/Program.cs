@@ -90,6 +90,8 @@ namespace Dictionary_C_2
         {
             var result = "";
             
+            var storage = new Storage();
+            
             if (weatherData != null)
             {
                 result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
@@ -102,6 +104,8 @@ namespace Dictionary_C_2
                     result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
                     result += $"Давление: {forecast.Pressure}Pa\n";
                     result += $"Влажность: {forecast.Humidity}%\n";
+                    
+                    storage.WeatherData.Add(cityName, weatherData);
                 }
             }
             else
@@ -141,54 +145,12 @@ namespace Dictionary_C_2
             Console.ReadLine();
         }
 
-    
-    
-    
-    
-
-       
-
 
             
 
-            else if (weatherType != null && weatherType.ToLower() == "на 5 дней")
-            {
-                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+            
 
-                WeatherData weatherData = await program.PrintAsync(url);
-                var result = "";
-
-                if (weatherData != null)
-                {
-                    result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
-                    for (int i = 0; i < weatherData.ForecastList.Count; i++)
-                    {
-                        Forecast forecast = weatherData.ForecastList[i];
-
-                        result += $"День {i + 1}: \n";
-                        result += $"Дата: {forecast.Date}\n";
-                        result += $"Температура: {forecast.Temp}°C\n";
-                        result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
-                        result += $"Давление: {forecast.Pressure}Pa\n";
-                        result += $"Влажность: {forecast.Humidity}%\n";
-                        
-                        storage.WeatherData.Add(cityName, weatherData);
-                    }
-                }
-
-                else
-                {
-                    result += $"Ошибка получения данных о погоде в городе {cityName}\n";
-                }
-
-                Console.WriteLine(result);
-                Console.ReadLine();
-            }
-
-            else
-            {
-                Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
-            }
+            
             
             // Метод сериализации данных
             void SerializeData(Dictionary<string, WeatherData> data, string path)
