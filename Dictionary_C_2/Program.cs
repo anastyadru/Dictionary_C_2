@@ -70,6 +70,11 @@ namespace Dictionary_C_2
             return weatherType;
         }
         
+        /// <summary>
+        /// Выводит на консоль данные о текущей погоде в указанном городе.
+        /// </summary>
+        /// <param name="weatherData">Объект WeatherData, содержащий данные о погоде.</param>
+        /// <param name="cityName">Название города.</param>
         private static void PrintCurrentWeather(WeatherData weatherData, string cityName)
         {
             var result = "";
@@ -94,6 +99,11 @@ namespace Dictionary_C_2
             Console.WriteLine(result);
         }
 
+        /// <summary>
+        /// Выводит на консоль данные о прогнозе погоды на 5 дней в указанном городе.
+        /// </summary>
+        /// <param name="weatherData">Объект WeatherData, содержащий данные о погоде.</param>
+        /// <param name="cityName">Название города.</param>
         private static void PrintWeatherForecast(WeatherData weatherData, string cityName)
         {
             var result = "";
@@ -154,59 +164,53 @@ namespace Dictionary_C_2
         }
 
 
+ 
             
+        // Метод сериализации данных
+        void SerializeData(Dictionary<string, WeatherData> data, string path)
+        {
+            var formatter = new BinaryFormatter();
+            using var stream = new FileStream(path, FileMode.Create);
+            formatter.Serialize(stream, data);
+        }
 
+        // Метод десериализации данных
+        Dictionary<string, WeatherData> DeserializeData(string path)
+        {
+            var formatter = new BinaryFormatter();
+            using var stream = new FileStream(path, FileMode.Open);
+            return (Dictionary<string, WeatherData>)formatter.Deserialize(stream);
+        }
             
+        // Использование методов сериализации и десериализации
+        var data = storage.WeatherData; // Получаем данные из хранилища
+        var path = "weatherdata.dat"; // Указываем путь к файлу для сохранения данных
 
+        SerializeData(data.ToDictionary(x => x.Key, x => x.Value), path); // Сериализуем данные и записываем их в файл
+
+        var loadedData = DeserializeData(path); // Десериализуем данные из файла
+
+        // Выводим результаты
+        Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
+
+        foreach (var item in loadedData)
+        {
+            Console.WriteLine($"Город: {item.Key}");
+            Console.WriteLine($"Данные: {item.Value}");
+        }
             
-            
-            // Метод сериализации данных
-            void SerializeData(Dictionary<string, WeatherData> data, string path)
-            {
-                var formatter = new BinaryFormatter();
-                using var stream = new FileStream(path, FileMode.Create);
-                formatter.Serialize(stream, data);
-            }
+        // Обработка событий при добавлении и удалении элементов из ObservableDictionary
+        storage.WeatherData.ItemAdded += CacheItemAdded;
+        storage.WeatherData.ItemRemoved += CacheItemRemoved;
 
-            // Метод десериализации данных
-            Dictionary<string, WeatherData> DeserializeData(string path)
-            {
-                var formatter = new BinaryFormatter();
-                using var stream = new FileStream(path, FileMode.Open);
-                return (Dictionary<string, WeatherData>)formatter.Deserialize(stream);
-            }
-            
-            // Использование методов сериализации и десериализации
-            var data = storage.WeatherData; // Получаем данные из хранилища
-            var path = "weatherdata.dat"; // Указываем путь к файлу для сохранения данных
+        void CacheItemAdded(object sender, KeyValuePair<string, WeatherData> e)
+        {
+            Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
+        }
 
-            SerializeData(data.ToDictionary(x => x.Key, x => x.Value), path); // Сериализуем данные и записываем их в файл
-
-            var loadedData = DeserializeData(path); // Десериализуем данные из файла
-
-            // Выводим результаты
-            Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
-
-            foreach (var item in loadedData)
-            {
-                Console.WriteLine($"Город: {item.Key}");
-                Console.WriteLine($"Данные: {item.Value}");
-            }
-            
-            // Обработка событий при добавлении и удалении элементов из ObservableDictionary
-            storage.WeatherData.ItemAdded += CacheItemAdded;
-            storage.WeatherData.ItemRemoved += CacheItemRemoved;
-
-            void CacheItemAdded(object sender, KeyValuePair<string, WeatherData> e)
-            {
-                Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
-            }
-
-            void CacheItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
-            {
-                Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
-            }
-            
+        void CacheItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
+        {
+            Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
         }
     }
 }
