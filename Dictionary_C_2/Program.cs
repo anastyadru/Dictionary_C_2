@@ -36,6 +36,10 @@ namespace Dictionary_C_2
             }
         }
 
+        /// <summary>
+        /// Получает название города от пользователя.
+        /// </summary>
+        /// <returns>Название города.</returns>
         private static string GetCityName()
         {
             string cityName;
@@ -55,6 +59,10 @@ namespace Dictionary_C_2
             return cityName;
         }
 
+        /// <summary>
+        /// Получает тип прогноза погоды от пользователя.
+        /// </summary>
+        /// <returns>Тип прогноза погоды (1 - на 1 день, 5 - на 5 дней).</returns>
         private static int GetWeatherType()
         {
             Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?"); 
