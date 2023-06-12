@@ -8,6 +8,77 @@ using Newtonsoft.Json;
 
 namespace Dictionary_C_2
 {
+    public class Program
+    {
+        private static async Task<WeatherData> GetWeatherDataAsync(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
+                    return weatherData;
+                }
+
+                return null;
+            }
+        }
+
+        private static string GetCityName()
+        {
+            string cityName;
+            
+            try
+            {
+                Console.WriteLine("Введите, для какого города прогноз погоды: Minsk, London, Paris, NewYork, Warsaw");
+                cityName = Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine("Такого города не существует в списке. Введите город вручную: ");
+                cityName = Console.ReadLine();
+            }
+
+            return cityName;
+        }
+
+        private static int GetWeatherType()
+        {
+            Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?"); 
+            var weatherType = int.Parse(Console.ReadLine());
+            return weatherType;
+        }
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /// <summary>
     /// Класс, содержащий точку входа в программу.
     /// </summary>
