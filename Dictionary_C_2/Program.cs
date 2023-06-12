@@ -8,8 +8,17 @@ using Newtonsoft.Json;
 
 namespace Dictionary_C_2
 {
+    
+    /// <summary>
+    /// Класс, содержащий точку входа в программу.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Асинхронно получает данные о погоде по указанному URL и возвращает объект WeatherData.
+        /// </summary>
+        /// <param name="url">URL для получения данных о погоде.</param>
+        /// <returns>Объект WeatherData, содержащий данные о погоде.</returns>
         private static async Task<WeatherData> GetWeatherDataAsync(string url)
         {
             using (var client = new HttpClient())
@@ -127,30 +136,7 @@ namespace Dictionary_C_2
     
     
     
-    /// <summary>
-    /// Класс, содержащий точку входа в программу.
-    /// </summary>
-     public class Program
-    {
-        /// <summary>
-        /// Асинхронно получает данные о погоде по указанному URL и возвращает объект WeatherData.
-        /// </summary>
-        /// <param name="url">URL для получения данных о погоде.</param>
-        /// <returns>Объект WeatherData, содержащий данные о погоде.</returns>
-        private async Task<WeatherData> PrintAsync(string url)
-        {
-            using var client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-                
-            if (response.IsSuccessStatusCode)
-            {
-                string responseBody = await response.Content.ReadAsStringAsync();
-                WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
-                return weatherData;
-            }
-                
-            return null;
-        }
+    
 
         /// <summary>
         /// Основной метод приложения
