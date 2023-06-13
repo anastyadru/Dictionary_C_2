@@ -200,7 +200,7 @@ namespace Dictionary_C_2
         foreach (var item in loadedData)
         {
             Console.WriteLine($"Город: {item.Key}");
-            Console.WriteLine($"Данные: {item.Value}");
+            Console.WriteLine($"Данные: {item.Value.Data}");
         }
             
         // Обработка событий при добавлении и удалении элементов из ObservableDictionary
@@ -209,12 +209,12 @@ namespace Dictionary_C_2
 
         void CacheItemAdded(object sender, KeyValuePair<string, WeatherData> e)
         {
-            Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value}");
+            Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value.Data}");
         }
 
         void CacheItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
         {
-            Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value}");
+            Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value.Data}");
         }
     }
 }
