@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Dictionary_C_2
 {
-    
+
     /// <summary>
     /// Класс, содержащий точку входа в программу.
     /// </summary>
@@ -25,7 +25,7 @@ namespace Dictionary_C_2
             using (var client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(url);
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
@@ -44,7 +44,7 @@ namespace Dictionary_C_2
         private static string GetCityName()
         {
             string cityName;
-            
+
             try
             {
                 Console.WriteLine("Введите, для какого города прогноз погоды: Minsk, London, Paris, NewYork, Warsaw");
@@ -66,11 +66,11 @@ namespace Dictionary_C_2
         /// <returns>Тип прогноза погоды (1 - на 1 день, 5 - на 5 дней).</returns>
         private static int GetWeatherType()
         {
-            Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?"); 
+            Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?");
             var weatherType = int.Parse(Console.ReadLine());
             return weatherType;
         }
-        
+
         /// <summary>
         /// Выводит на консоль данные о текущей погоде в указанном городе.
         /// </summary>
@@ -79,9 +79,9 @@ namespace Dictionary_C_2
         private static void PrintCurrentWeather(WeatherData weatherData, string cityName)
         {
             var result = "";
-            
+
             var storage = new Storage();
-            
+
             if (weatherData != null)
             {
                 result += $"Прогноз погоды в городе {cityName} на сегодня: \n";
@@ -89,7 +89,7 @@ namespace Dictionary_C_2
                 result += $"Температура ощущается на: {weatherData.Data.FeelsLike}°C\n";
                 result += $"Давление: {weatherData.Data.Pressure}Pa\n";
                 result += $"Влажность: {weatherData.Data.Humidity}%\n";
-                
+
                 storage.WeatherData.Add(cityName, weatherData);
             }
             else
@@ -108,9 +108,9 @@ namespace Dictionary_C_2
         private static void PrintWeatherForecast(WeatherData weatherData, string cityName)
         {
             var result = "";
-            
+
             var storage = new Storage();
-            
+
             if (weatherData != null)
             {
                 result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
@@ -123,7 +123,7 @@ namespace Dictionary_C_2
                     result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
                     result += $"Давление: {forecast.Pressure}Pa\n";
                     result += $"Влажность: {forecast.Humidity}%\n";
-                    
+
                     storage.WeatherData.Add(cityName, weatherData);
                 }
             }
@@ -143,26 +143,34 @@ namespace Dictionary_C_2
         {
             var cityName = GetCityName();
             var weatherType = GetWeatherType();
-            
+
             if (weatherType == 1)
             {
-                string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                string url =
+                    $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
                 WeatherData weatherData = await GetWeatherDataAsync(url);
                 PrintCurrentWeather(weatherData, cityName);
             }
             else if (weatherType == 5)
             {
-                string url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                string url =
+                    $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
                 WeatherData weatherData = await GetWeatherDataAsync(url);
                 PrintWeatherForecast(weatherData, cityName);
             }
             else
             {
-                Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
+                Console.WriteLine(
+                    "Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
             }
 
             Console.ReadLine();
         }
+    }
+}
+
+
+
 
         // Обработка событий при добавлении и удалении элементов из ObservableDictionary
         storage.WeatherData.ItemAdded += CacheItemAdded;
@@ -177,9 +185,7 @@ namespace Dictionary_C_2
         {
             Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value.Data}");
         }
-        
- 
-            
+
         // Метод сериализации данных
         void SerializeData(Dictionary<string, WeatherData> data, string path)
         {
@@ -198,6 +204,3 @@ namespace Dictionary_C_2
                 return data.ToDictionary(x => x.Key, x => new WeatherData { Data = x.Value });
             }
         }
-
-    }
-}
