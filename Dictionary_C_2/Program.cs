@@ -179,15 +179,18 @@ namespace Dictionary_C_2
         Dictionary<string, WeatherData> DeserializeData(string path)
         {
             var formatter = new BinaryFormatter();
-            using var stream = new FileStream(path, FileMode.Open);
-            return (Dictionary<string, WeatherData>)formatter.Deserialize(stream);
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                var data = (Dictionary<string, WeatherData.Data>)formatter.Deserialize(stream);
+                return data.ToDictionary(x => x.Key, x => new WeatherData { Data = x.Value });
+            }
         }
             
         // Использование методов сериализации и десериализации
         var data = storage.WeatherData; // Получаем данные из хранилища
         var path = "weatherdata.dat"; // Указываем путь к файлу для сохранения данных
 
-        SerializeData(data.ToDictionary(x => x.Key, x => x.Value), path); // Сериализуем данные и записываем их в файл
+        SerializeData(data, path); // Сериализуем данные и записываем их в файл
 
         var loadedData = DeserializeData(path); // Десериализуем данные из файла
 
