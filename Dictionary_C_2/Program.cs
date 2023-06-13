@@ -198,22 +198,6 @@ namespace Dictionary_C_2
                 return data.ToDictionary(x => x.Key, x => new WeatherData { Data = x.Value });
             }
         }
-            
-        // Использование методов сериализации и десериализации
-        var data = storage.WeatherData; // Получаем данные из хранилища
-        string path = "weatherdata.dat"; // Указываем путь к файлу для сохранения данных
 
-        SerializeData(data, path); // Сериализуем данные и записываем их в файл
-
-        var loadedData = DeserializeData(path); // Десериализуем данные из файла
-
-        // Выводим результаты
-        Console.WriteLine($"Загружено {loadedData.Count} записей из файла.");
-
-        foreach (var item in loadedData)
-        {
-            Console.WriteLine($"Город: {item.Key}");
-            Console.WriteLine($"Данные: {item.Value.Data}");
-        }
     }
 }
