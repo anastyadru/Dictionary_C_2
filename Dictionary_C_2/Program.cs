@@ -188,7 +188,7 @@ namespace Dictionary_C_2
             
         // Использование методов сериализации и десериализации
         var data = storage.WeatherData; // Получаем данные из хранилища
-        var path = "weatherdata.dat"; // Указываем путь к файлу для сохранения данных
+        string path = "weatherdata.dat"; // Указываем путь к файлу для сохранения данных
 
         SerializeData(data, path); // Сериализуем данные и записываем их в файл
 
