@@ -164,7 +164,20 @@ namespace Dictionary_C_2
             Console.ReadLine();
         }
 
+        // Обработка событий при добавлении и удалении элементов из ObservableDictionary
+        storage.WeatherData.ItemAdded += CacheItemAdded;
+        storage.WeatherData.ItemRemoved += CacheItemRemoved;
 
+        void CacheItemAdded(object sender, KeyValuePair<string, WeatherData> e)
+        {
+            Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value.Data}");
+        }
+
+        void CacheItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
+        {
+            Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value.Data}");
+        }
+        
  
             
         // Метод сериализации данных
@@ -201,20 +214,6 @@ namespace Dictionary_C_2
         {
             Console.WriteLine($"Город: {item.Key}");
             Console.WriteLine($"Данные: {item.Value.Data}");
-        }
-            
-        // Обработка событий при добавлении и удалении элементов из ObservableDictionary
-        storage.WeatherData.ItemAdded += CacheItemAdded;
-        storage.WeatherData.ItemRemoved += CacheItemRemoved;
-
-        void CacheItemAdded(object sender, KeyValuePair<string, WeatherData> e)
-        {
-            Console.WriteLine($"Добавлен элемент с ключом {e.Key} и значением {e.Value.Data}");
-        }
-
-        void CacheItemRemoved(object sender, KeyValuePair<string, WeatherData> e)
-        {
-            Console.WriteLine($"Удален элемент с ключом {e.Key} и значением {e.Value.Data}");
         }
     }
 }
