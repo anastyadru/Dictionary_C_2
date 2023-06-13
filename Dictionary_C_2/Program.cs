@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
@@ -171,7 +172,7 @@ namespace Dictionary_C_2
         {
             var formatter = new BinaryFormatter();
             using var stream = new FileStream(path, FileMode.Create);
-            formatter.Serialize(stream, data);
+            formatter.Serialize(stream, data.ToDictionary(x => x.Key, x => x.Value.Data));
         }
 
         // Метод десериализации данных
