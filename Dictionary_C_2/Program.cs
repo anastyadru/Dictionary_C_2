@@ -146,22 +146,19 @@ namespace Dictionary_C_2
 
             if (weatherType == 1)
             {
-                string url =
-                    $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
                 WeatherData weatherData = await GetWeatherDataAsync(url);
                 PrintCurrentWeather(weatherData, cityName);
             }
             else if (weatherType == 5)
             {
-                string url =
-                    $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                string url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
                 WeatherData weatherData = await GetWeatherDataAsync(url);
                 PrintWeatherForecast(weatherData, cityName);
             }
             else
             {
-                Console.WriteLine(
-                    "Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
+                Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
             }
 
             Console.ReadLine();
