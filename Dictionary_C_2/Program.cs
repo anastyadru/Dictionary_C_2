@@ -126,6 +126,7 @@ namespace Dictionary_C_2
                     result += $"Влажность: {forecast.Humidity}%\n";
 
                     storage.WeatherData.Add(cityName, weatherData);
+                    storage.SaveData();
                 }
             }
             else
