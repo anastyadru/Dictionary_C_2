@@ -67,5 +67,10 @@ namespace Dictionary_C_2
                 throw new SerializationException("Failed to deserialize object", ex);
             }
         }
+        
+        public void SaveData(string filePath)
+        {
+            Storage.Save(WeatherData, filePath);
+        }
     }
 }
