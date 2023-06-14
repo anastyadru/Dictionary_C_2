@@ -91,6 +91,7 @@ namespace Dictionary_C_2
                 result += $"Влажность: {weatherData.Data.Humidity}%\n";
 
                 storage.WeatherData.Add(cityName, weatherData);
+                storage.SaveData();
             }
             else
             {
