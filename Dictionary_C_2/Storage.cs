@@ -53,13 +53,19 @@ namespace Dictionary_C_2
                 
             return bytes.GetObject<T>();
         }
-        
+
         private static T GetObject<T>(this byte[] bytes)
         {
             using var memoryStream = new MemoryStream(bytes);
             var binaryFormatter = new BinaryFormatter();
-            return (T)binaryFormatter.Deserialize(memoryStream);
+            try
+            {
+                return (T)binaryFormatter.Deserialize(memoryStream);
+            }
+            catch (SerializationException ex)
+            {
+                throw new SerializationException("Failed to deserialize object", ex);
+            }
         }
-        
     }
 }
