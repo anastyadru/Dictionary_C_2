@@ -31,13 +31,6 @@ namespace Dictionary_C_2
             binaryFormatter.Serialize(fileStream, bytes); // вызван метод Serialize() для записи данных в файл 
         }
 
-        private static T GetObject<T>(this byte[] bytes)
-        {
-            using var memoryStream = new MemoryStream(bytes);
-            var binaryFormatter = new BinaryFormatter();
-            return (T)binaryFormatter.Deserialize(memoryStream);
-        }
-        
         /// <summary>
         /// Загружает объект из файла по указанному пути.
         /// </summary>
@@ -59,6 +52,13 @@ namespace Dictionary_C_2
             }
                 
             return bytes.GetObject<T>();
+        }
+        
+        private static T GetObject<T>(this byte[] bytes)
+        {
+            using var memoryStream = new MemoryStream(bytes);
+            var binaryFormatter = new BinaryFormatter();
+            return (T)binaryFormatter.Deserialize(memoryStream);
         }
         
     }
