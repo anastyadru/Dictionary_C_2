@@ -145,6 +145,8 @@ namespace Dictionary_C_2
         {
             var cityName = GetCityName();
             var weatherType = GetWeatherType();
+            
+            var storage = new Storage();
 
             if (weatherType == 1)
             {
