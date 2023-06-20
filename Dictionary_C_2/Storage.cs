@@ -18,7 +18,7 @@ namespace Dictionary_C_2
         /// <typeparam name="T">Тип объекта.</typeparam>
         /// <param name="data">Объект для сохранения.</param>
         /// <param name="filePath">Путь к файлу, в который нужно сохранить объект.</param>
-        public static void Save<T>(T data, string filePath)
+        private static void Save<T>(T data, string filePath)
         {
             if (data == null)
             {

@@ -1,4 +1,6 @@
-﻿namespace Dictionary_C_2
+﻿using System;
+
+namespace Dictionary_C_2
 {
     /// <summary>
     /// Представляет данные.
@@ -18,11 +20,11 @@
         /// <summary>
         /// Получает или задает давление.
         /// </summary>
-        public int Pressure { get; set; }
+        public double Pressure { get; set; }
         
         /// <summary>
         /// Получает или задает влажность.
         /// </summary>
-        public int Humidity { get; set; }
+        public double Humidity { get; set; }
     }
 }

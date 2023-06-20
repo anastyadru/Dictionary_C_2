@@ -22,19 +22,17 @@ namespace Dictionary_C_2
         /// <returns>Объект WeatherData, содержащий данные о погоде.</returns>
         private static async Task<WeatherData> GetWeatherDataAsync(string url)
         {
-            using (var client = new HttpClient())
+            using var client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
             {
-                HttpResponseMessage response = await client.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
-                    return weatherData;
-                }
-
-                return null;
+                string responseBody = await response.Content.ReadAsStringAsync();
+                WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
+                return weatherData;
             }
+
+            return null;
         }
 
         /// <summary>
